@@ -4,4 +4,6 @@ public interface AboutMBean {
 
     String getHawtioVersion();
 
+    String getHmasterUrl();
+
 }

@@ -90,14 +90,26 @@ module JVM {
         }
       }
       Core.$apply($scope);
-    }
+    };
 
     $scope.fetch = () => {
       $scope.discovering = true;
       // use 10 sec timeout
-      jolokia.execute('jolokia:type=Discovery', 'lookupAgentsWithTimeout(int)', 10 * 1000, onSuccess($scope.render));
+      // jolokia.execute('jolokia:type=Discovery', 'lookupAgentsWithTimeout(int)', 10 * 1000, onSuccess($scope.render));
+        jolokia.request({
+          type: "read",
+          mbean: "hawtio:type=About",
+          attribute: "HmasterUrl"
+        }, {
+            success: (response) => {
+              log.debug("Successfully retreived hmaster backend url: " + response.value);
+              var url = response.value + '/rest/discovery';
+              jQuery.get(url, function (response) {
+                $scope.render(response);
+              });
+            }
+        });
     };
-
     $scope.fetch();
   }]);
 

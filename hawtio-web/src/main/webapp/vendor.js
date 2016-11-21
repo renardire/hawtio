@@ -65,7 +65,7 @@ var CustomPerspective = (function(localStorage) {
             },
             {
               href: "#/wiki"
-            },
+            }
           ]
         }
       }

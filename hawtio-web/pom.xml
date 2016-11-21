@@ -788,6 +788,26 @@
               <value>true</value>
             </systemProperty>
             <systemProperty>
+              <name>hawtio.proxyDisableCertificateValidation</name>
+              <value>${hawtio.proxyDisableCertificateValidation}</value>
+            </systemProperty>
+            <systemProperty>
+              <name>custom.hawtio.ssl.keyStorePassword</name>
+              <value>${custom.hawtio.ssl.keyStorePassword}</value>
+            </systemProperty>
+            <systemProperty>
+              <name>custom.hawtio.ssl.trustStorePassword</name>
+              <value>${custom.hawtio.ssl.trustStorePassword}</value>
+            </systemProperty>
+            <systemProperty>
+              <name>custom.hawtio.ssl.keyStore</name>
+              <value>${custom.hawtio.ssl.keyStore}</value>
+            </systemProperty>
+            <systemProperty>
+              <name>custom.hawtio.ssl.trustStore</name>
+              <value>${custom.hawtio.ssl.trustStore}</value>
+            </systemProperty>
+            <systemProperty>
               <key>hawtio.authenticationEnabled</key>
               <value>false</value>
             </systemProperty>

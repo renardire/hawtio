@@ -14,6 +14,7 @@ public class About implements AboutMBean {
     private ObjectName objectName;
     private MBeanServer mBeanServer;
     private String hawtioVersion;
+    private String hmasterURL = System.getProperty("jetbrains.hosted.hmaster.url", "https://127.0.0.1");
 
     public void init() throws Exception {
         if (objectName == null) {
@@ -52,6 +53,11 @@ public class About implements AboutMBean {
 
     protected ObjectName getObjectName() throws Exception {
         return new ObjectName("hawtio:type=About");
+    }
+
+    @Override
+    public String getHmasterUrl() {
+        return hmasterURL;
     }
 
     @Override
