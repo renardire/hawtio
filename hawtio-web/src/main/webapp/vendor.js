@@ -58,7 +58,7 @@ var CustomPerspective = (function(localStorage) {
               href: "#/logs"
             },
             {
-              href: "#/threads"
+              href: "#/dashboard"
             },
             {
               href: "#/tomcat"
