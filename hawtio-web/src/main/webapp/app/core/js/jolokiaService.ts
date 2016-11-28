@@ -29,10 +29,11 @@ module Core {
 
       // search for passed credentials when connecting to remote server
       try {
-        if (window.opener && "passUserDetails" in window.opener) {
+        var detailsParamName = "passUserDetails-" + connectionName;
+        if (window.opener && detailsParamName in window.opener) {
           // these are credentials used to connect to remote jolokia
-          username = window.opener["passUserDetails"].username;
-          password = window.opener["passUserDetails"].password;
+          username = window.opener[detailsParamName].username;
+          password = window.opener[detailsParamName].password;
           found = true;
         }
       } catch (securityException) {
@@ -168,7 +169,7 @@ module Core {
       };
 
       // empty jolokia that returns nothing
-      return answer;          
+      return answer;
     }
   }]);
 

@@ -1329,8 +1329,8 @@ module Core {
     var connectionMap = Core.loadConnectionMap();
     // use a copy so we can leave the original one alone
     var clone = <Core.ConnectOptions>Object.clone(options);
-    delete clone.userName;
-    delete clone.password;
+    // delete clone.userName;
+    // delete clone.password;
     connectionMap[<string>options.name] = clone;
     Core.saveConnectionMap(connectionMap);
   }
@@ -1350,7 +1350,7 @@ module Core {
     url = url.replace(/&/, "?");
     var newWindow = $window.open(url);
     newWindow['con'] = options.name;
-    $window['passUserDetails'] = {
+    window['passUserDetails-' + options.name] = {
       username: options.userName,
       password: options.password,
       loginDetails: {}
