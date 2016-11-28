@@ -808,6 +808,10 @@
               <value>${custom.hawtio.ssl.trustStore}</value>
             </systemProperty>
             <systemProperty>
+              <name>jetbrains.hosted.hmaster.url</name>
+              <value>${jetbrains.hosted.hmaster.url}</value>
+            </systemProperty>
+            <systemProperty>
               <key>hawtio.authenticationEnabled</key>
               <value>false</value>
             </systemProperty>
