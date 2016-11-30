@@ -8,9 +8,16 @@ import java.security.Principal;
  */
 public class TomcatPrincipal implements Principal, Serializable {
 
+    private final String userName;
     private final String roleName;
 
     public TomcatPrincipal(String roleName) {
+        this.roleName = roleName;
+        this.userName = "someUser";
+    }
+
+    public TomcatPrincipal(String userName, String roleName) {
+        this.userName = userName;
         this.roleName = roleName;
     }
 
@@ -18,4 +25,9 @@ public class TomcatPrincipal implements Principal, Serializable {
     public String getName() {
         return roleName;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
 }

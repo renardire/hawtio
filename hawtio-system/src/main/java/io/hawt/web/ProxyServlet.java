@@ -1,6 +1,8 @@
 package io.hawt.web;
 
+import io.hawt.git.RuntimeIOException;
 import io.hawt.util.Strings;
+import io.hawt.web.tomcat.TomcatPrincipal;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.*;
 import org.apache.http.client.CookieStore;
@@ -18,6 +20,7 @@ import org.apache.http.message.BasicHttpRequest;
 import org.apache.http.message.HeaderGroup;
 import org.apache.http.util.EntityUtils;
 
+import javax.security.auth.Subject;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,12 +30,10 @@ import javax.servlet.http.HttpSession;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.GeneralSecurityException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
+import java.security.*;
 import java.util.BitSet;
 import java.util.Enumeration;
 import java.util.Formatter;
@@ -80,6 +81,11 @@ public class ProxyServlet extends HttpServlet {
      */
     private static final String PROXY_ACCEPT_SELF_SIGNED_CERTS = "hawtio.proxyDisableCertificateValidation";
     private static final String PROXY_ACCEPT_SELF_SIGNED_CERTS_ENV = "PROXY_DISABLE_CERT_VALIDATION";
+    /**
+     * Salt for authentication
+     */
+    private static final String SALT_KEY = "jetbrains.youtrack.hosted.jmx.salt";
+    private static final String AUTH_TYPE = "Bicycle";
 
     /* MISC */
 
@@ -212,6 +218,11 @@ public class ProxyServlet extends HttpServlet {
                 session.setAttribute("proxy-credentials", proxyAuth);
             }
         }
+        try {
+            setAuthHeaderWithRole(servletRequest, proxyRequest);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeIOException(e);
+        }
 
         setXForwardedForHeader(servletRequest, proxyRequest);
 
@@ -268,6 +279,28 @@ public class ProxyServlet extends HttpServlet {
                 EntityUtils.consumeQuietly(proxyResponse.getEntity());
             //Note: Don't need to close servlet outputStream:
             // http://stackoverflow.com/questions/1159168/should-one-call-close-on-httpservletresponse-getoutputstream-getwriter
+        }
+    }
+
+    private void setAuthHeaderWithRole(HttpServletRequest servletRequest, HttpRequest proxyRequest) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        Subject subj = (Subject) servletRequest.getSession().getAttribute("subject");
+        if (subj != null) {
+            for (Principal principal : subj.getPrincipals()) {
+                if (principal instanceof TomcatPrincipal) {
+                    String username = ((TomcatPrincipal) principal).getUserName();
+                    String role = principal.getName();
+                    if ("youtrack-admin".equals(role)) {
+                        role = "ReadWrite";
+                    } else {
+                        role = "ReadOnly";
+                    }
+                    String toHash = username + role + System.getProperty(SALT_KEY);
+                    byte[] hashedValue = MessageDigest.getInstance("MD5").digest(toHash.getBytes("UTF-8"));
+                    String userNameRoleHash = username + ":" + role + ":" + Base64.encodeBase64String(hashedValue);
+                    proxyRequest.setHeader("Authorization", AUTH_TYPE + " " + Base64.encodeBase64String(userNameRoleHash.getBytes("UTF-8")));
+                    return;
+                }
+            }
         }
     }
 

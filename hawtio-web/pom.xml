@@ -812,6 +812,10 @@
               <value>${jetbrains.hosted.hmaster.url}</value>
             </systemProperty>
             <systemProperty>
+              <name>jetbrains.youtrack.hosted.jmx.salt</name>
+              <value>${jetbrains.youtrack.hosted.jmx.salt}</value>
+            </systemProperty>
+            <systemProperty>
               <key>hawtio.authenticationEnabled</key>
               <value>false</value>
             </systemProperty>

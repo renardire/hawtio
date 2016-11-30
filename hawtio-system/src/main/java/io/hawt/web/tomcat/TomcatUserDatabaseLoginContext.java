@@ -43,53 +43,53 @@ public class TomcatUserDatabaseLoginContext implements LoginModule {
     static {
         Map<String, Predicate<PasswordPair>> temp = new HashMap<>(6);
         temp.put(
-            "NONE",
-            new Predicate<PasswordPair>() {
-                @Override
-                public boolean evaluate(final PasswordPair passwordPair) {
-                    return passwordPair.getFilePassword().equals(passwordPair.getSuppliedPassword());
-                }
-            });
+                "NONE",
+                new Predicate<PasswordPair>() {
+                    @Override
+                    public boolean evaluate(final PasswordPair passwordPair) {
+                        return passwordPair.getFilePassword().equals(passwordPair.getSuppliedPassword());
+                    }
+                });
         temp.put(
-            "MD5",
-            new Predicate<PasswordPair>() {
-                @Override
-                public boolean evaluate(final PasswordPair passwordPair) {
-                    return passwordPair.getFilePassword().equals(DigestUtils.md5Hex(passwordPair.getSuppliedPassword()));
-                }
-            });
+                "MD5",
+                new Predicate<PasswordPair>() {
+                    @Override
+                    public boolean evaluate(final PasswordPair passwordPair) {
+                        return passwordPair.getFilePassword().equals(DigestUtils.md5Hex(passwordPair.getSuppliedPassword()));
+                    }
+                });
         temp.put(
-            "SHA-256",
-            new Predicate<PasswordPair>() {
-                @Override
-                public boolean evaluate(final PasswordPair passwordPair) {
-                    return passwordPair.getFilePassword().equals(DigestUtils.sha256Hex(passwordPair.getSuppliedPassword()));
-                }
-            });
+                "SHA-256",
+                new Predicate<PasswordPair>() {
+                    @Override
+                    public boolean evaluate(final PasswordPair passwordPair) {
+                        return passwordPair.getFilePassword().equals(DigestUtils.sha256Hex(passwordPair.getSuppliedPassword()));
+                    }
+                });
         temp.put(
-            "SHA",
-            new Predicate<PasswordPair>() {
-                @Override
-                public boolean evaluate(final PasswordPair passwordPair) {
-                    return passwordPair.getFilePassword().equals(DigestUtils.shaHex(passwordPair.getSuppliedPassword()));
-                }
-            });
+                "SHA",
+                new Predicate<PasswordPair>() {
+                    @Override
+                    public boolean evaluate(final PasswordPair passwordPair) {
+                        return passwordPair.getFilePassword().equals(DigestUtils.shaHex(passwordPair.getSuppliedPassword()));
+                    }
+                });
         temp.put(
-            "SHA-512",
-            new Predicate<PasswordPair>() {
-                @Override
-                public boolean evaluate(final PasswordPair passwordPair) {
-                    return passwordPair.getFilePassword().equals(DigestUtils.sha512Hex(passwordPair.getSuppliedPassword()));
-                }
-            });
+                "SHA-512",
+                new Predicate<PasswordPair>() {
+                    @Override
+                    public boolean evaluate(final PasswordPair passwordPair) {
+                        return passwordPair.getFilePassword().equals(DigestUtils.sha512Hex(passwordPair.getSuppliedPassword()));
+                    }
+                });
         temp.put(
-            "SHA-384",
-            new Predicate<PasswordPair>() {
-                @Override
-                public boolean evaluate(final PasswordPair passwordPair) {
-                    return passwordPair.getFilePassword().equals(DigestUtils.sha384Hex(passwordPair.getSuppliedPassword()));
-                }
-            });
+                "SHA-384",
+                new Predicate<PasswordPair>() {
+                    @Override
+                    public boolean evaluate(final PasswordPair passwordPair) {
+                        return passwordPair.getFilePassword().equals(DigestUtils.sha384Hex(passwordPair.getSuppliedPassword()));
+                    }
+                });
         PASSWORD_CHECKS = Collections.unmodifiableMap(temp);
     }
 
@@ -143,7 +143,7 @@ public class TomcatUserDatabaseLoginContext implements LoginModule {
                     String[] roles = user[2].split(",");
                     for (String role : roles) {
                         LOG.trace("User {} has role {}", username, role);
-                        subject.getPrincipals().add(new TomcatPrincipal(role));
+                        subject.getPrincipals().add(new TomcatPrincipal(username, role));
                     }
                 }
             } else {
