@@ -1,3 +1,4 @@
+[![internal JetBrains project](http://jb.gg/badges/internal-plastic.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 
 Don't cha wish your console was [hawt like me?](http://www.youtube.com/watch?v=YNSxNsr4wmA) I'm hawt so you can stay cool
 
