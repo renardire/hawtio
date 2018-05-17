@@ -11,7 +11,7 @@ var CustomPerspective = (function(localStorage) {
         canonicalNaming: false,
         ignoreErrors: true,
         mimeType: 'application/json',
-        maxDepth: 4,
+        maxDepth: 8,
         maxCollectionSize: 10000
       });
     }

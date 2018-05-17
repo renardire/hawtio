@@ -17,12 +17,6 @@
           <div class="row-fluid">
             <div class="control-group pull-right">
               <div class="controls">
-                <button class="btn"
-                        zero-clipboard
-                        data-clipboard-text="{{operationResult}}"
-                        title="Copy value to clipboard">
-                  <i class="icon-copy"></i>
-                </button>
                 <button class="btn cancel"
                         ng-click="close()">
                   <i class="icon-remove"></i> Close
@@ -67,12 +61,6 @@
           <div class="pull-right">
             <input type="text" name="jolokiaUrl" id="jolokiaUrl" value="{{jolokiaUrl}}" style="width: 60em;" readonly/>
               <span style="vertical-align: super;">
-                <button class="btn"
-                zero-clipboard
-                data-clipboard-text="{{jolokiaUrl}}"
-                title="Copy Jolokia REST Url to clipboard">
-                <i class="icon-copy"></i>
-                </button>
               </span>
           </div>
         </div>
@@ -95,14 +83,7 @@
       <i class="icon-cog"
          ng-class="getClass(operation)"></i>
       <span>{{operation.name}}</span>
-      <span class="operation-actions">
-        <button class="btn"
-                zero-clipboard
-                data-clipboard-text="{{operation.name}}"
-                title="Copy method name to clipboard">
-          <i class="icon-copy"></i>
-        </button>
-      </span>
+      <span class="operation-actions"></span>
     </li>
   </ul>
 
