@@ -42,7 +42,7 @@
     <dependency>
       <groupId>org.apache.maven.indexer</groupId>
       <artifactId>indexer-core</artifactId>
-      <version>5.1.1</version>
+      <version>5.1.2-816025a</version>
     </dependency>
     <dependency>
       <!-- wagon-http-lightweight is not usable in production as it messes with system properties -->
